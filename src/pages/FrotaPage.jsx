@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { UserPlus, Users } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const initialFormState = {
   placa: "",
@@ -36,11 +38,19 @@ function FrotaPage() {
     setFormData(initialFormState);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center">
+          <button
+            onClick={() => navigate('/cadastros')}
+            className="mr-4 hover:bg-blue-700 p-2 rounded-full transition-colors"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
           <h1 className="text-3xl font-bold text-blue-600 flex items-center gap-2">
             <Users className="h-8 w-8" />
             Sistema de Cadastro de Frota

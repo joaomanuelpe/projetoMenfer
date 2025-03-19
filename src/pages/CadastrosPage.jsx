@@ -12,7 +12,7 @@ const RegistrationsPage = () => {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <div className="flex items-center">
             <button 
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/home')}
               className="mr-4 hover:bg-blue-700 p-2 rounded-full transition-colors"
             >
               <ArrowLeft className="w-6 h-6" />

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { UserPlus, Users } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 const initialFormState = {
   razaoSocial: "",
@@ -29,11 +31,19 @@ function EmpresaPage() {
     setFormData(initialFormState);
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 flex items-center">
+          <button
+            onClick={() => navigate('/cadastros')}
+            className="mr-4 hover:bg-blue-700 p-2 rounded-full transition-colors"
+          >
+            <ArrowLeft className="w-6 h-6" />
+          </button>
           <h1 className="text-3xl font-bold text-blue-600 flex items-center gap-2">
             <Users className="h-8 w-8" />
             Sistema de Cadastro de Empresas
@@ -45,7 +55,7 @@ function EmpresaPage() {
             <UserPlus className="h-6 w-6" />
             Nova Empresa
           </h2>
-          
+
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700">Razão Social:</label>
@@ -148,7 +158,7 @@ function EmpresaPage() {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold text-blue-600 mb-6">Empresas Cadastradas</h2>
-          
+
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">

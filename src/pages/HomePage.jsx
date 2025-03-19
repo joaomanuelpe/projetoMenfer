@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bell, UserPlus, Users, MessageCircle } from "lucide-react";
+import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -13,7 +13,11 @@ const HomePage = () => {
     const fetchVerse = async () => {
       try {
         const response = await fetch(
-          "https://www.abibliadigital.com.br/api/verses/nvi/random"
+          "https://www.abibliadigital.com.br/api/verses/nvi/random", {
+            headers: {
+              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHIiOiJXZWQgTWFyIDE5IDIwMjUgMTc6MzA6NDAgR01UKzAwMDAuYXJjZXN0aTE1QGdtYWlsLmNvbSIsImlhdCI6MTc0MjQwNTQ0MH0.4ebn3oh81wI0DEJud_Czm0KagyOYTd2TOHV_ArSxfX4'
+            },
+          }
         );
         const data = await response.json();
         setVerse(
@@ -44,7 +48,7 @@ const HomePage = () => {
       </header>
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="text-center text-gray-700 italic">
+          <div className="text-center text-gray-700 italic text-xl">
             {verse || "Carregando versículo..."}
           </div>
         </div>
@@ -63,6 +67,16 @@ const HomePage = () => {
           </div>
 
           <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-orange-500 h-2"></div>
+            <div className="p-6">
+              <BadgeDollarSign className="w-12 h-12 mx-auto mb-4 text-orange-500" />
+              <p className="text-center font-semibold text-gray-800 text-lg">
+                Controle financeiro
+              </p>
+            </div>
+          </div>
+
+          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="bg-blue-600 h-2"></div>
             <div className="p-6">
               <Bell className="w-12 h-12 mx-auto mb-4 text-blue-600" />
@@ -75,31 +89,22 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
-            <div className="bg-orange-500 h-2"></div>
-            <div className="p-6">
-              <MessageCircle className="w-12 h-12 mx-auto mb-4 text-orange-500" />
-              <p className="text-center font-semibold text-gray-800 text-lg">
-                Mensagens
-              </p>
-            </div>
-          </div>
 
           <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="bg-blue-600 h-2"></div>
             <div className="p-6">
-              <Users className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+              <Fuel className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <p className="text-center font-semibold text-gray-800 text-lg">
-                Usuários
+                Abastecimento
               </p>
             </div>
           </div>
           <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="bg-blue-600 h-2"></div>
             <div className="p-6">
-              <Users className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+              <ScrollText className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <p className="text-center font-semibold text-gray-800 text-lg">
-                Usuários
+                Relatórios
               </p>
             </div>
           </div>
