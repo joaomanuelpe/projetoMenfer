@@ -34,7 +34,7 @@ const LoginPage = () => {
           <div className="bg-[#D4EBF8]/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 space-y-8">
             <div className="text-center">
               <h1 className="text-3xl font-bold bg-gradient-to-r from-[#0A3981] to-[#1F509A] bg-clip-text text-transparent">
-                Bem-vindo
+                Bem-vindo à Menferlog
               </h1>
               <p className="text-[#0A3981]/80 mt-2">Acesse sua conta</p>
             </div>
