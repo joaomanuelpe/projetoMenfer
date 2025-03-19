@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Bell, UserPlus, Users, MessageCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const HomePage = () => {
   const [verse, setVerse] = useState("");
   const [notifications, setNotifications] = useState(0);
-  const userName = "Nome do Usuário";
+  const { user }= useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ const HomePage = () => {
           <div className="flex items-center space-x-4">
             <span className="flex items-center">
               <Users className="w-5 h-5 mr-2" />
-              {userName}
+              {user ? user.username : "Usuario Default"}
             </span>
           </div>
         </div>

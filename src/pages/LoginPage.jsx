@@ -12,7 +12,7 @@ const LoginPage = () => {
     e.preventDefault();
     // Validações aqui...
     login(username);
-    navigate("/");
+    navigate("/home");
   };
 
   return (
