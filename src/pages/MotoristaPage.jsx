@@ -191,4 +191,4 @@ function MotoristaPage() {
   );
 }
 
-export default App;
+export default MotoristaPage;

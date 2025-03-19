@@ -407,4 +407,4 @@ function FrotaPage() {
   );
 }
 
-export default App;
+export default FrotaPage;
