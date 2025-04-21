@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText } from "lucide-react";
+import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText, FilePlus} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
@@ -141,6 +141,15 @@ const HomePage = () => {
               <Users className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <p className="text-center font-semibold text-gray-800 text-lg">
                 Usuários
+              </p>
+            </div>
+          </div>
+          <div onClick={() => navigate("/docs")} className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
+            <div className="bg-blue-600 h-2"></div>
+            <div className="p-6">
+              <FilePlus className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+              <p className="text-center font-semibold text-gray-800 text-lg">
+                Gerar documentos
               </p>
             </div>
           </div>
