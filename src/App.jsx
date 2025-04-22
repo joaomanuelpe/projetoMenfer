@@ -7,7 +7,7 @@ import FrotaPage from "./pages/FrotaPage";
 import MotoristaPage from "./pages/MotoristaPage";
 import LoginPage from "./pages/LoginPage";
 import { BrowserRouter } from 'react-router-dom';
-import SelecaoVeiculoPage from "./pages/CarregarDocs";
+import TelaSelecao from "./pages/GerarPdfPage";
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path="/empresa" element={<EmpresaPage />} />
         <Route path="/frota" element={<FrotaPage />} />
         <Route path="/motorista" element={<MotoristaPage />} />
-        <Route path="/docs" element={<SelecaoVeiculoPage />} />
+        <Route path="/docs" element={<TelaSelecao />} />
         <Route path="/" element={<LoginPage />} />
       </Routes>
     </BrowserRouter>
