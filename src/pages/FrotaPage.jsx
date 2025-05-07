@@ -43,7 +43,6 @@ function FrotaPage() {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="mb-8 flex items-center">
           <button
             onClick={() => navigate('/cadastros')}
@@ -60,7 +59,7 @@ function FrotaPage() {
         <div className="bg-white rounded-lg shadow-md p-6 mb-8">
           <h2 className="text-xl font-semibold text-blue-600 mb-6 flex items-center gap-2">
             <UserPlus className="h-6 w-6" />
-            Nova Frota
+            Novo Veículo
           </h2>
 
           <form
@@ -265,34 +264,13 @@ function FrotaPage() {
 
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-semibold text-blue-600 mb-6">
-            Frotas Cadastradas
+            Frota Cadastrada
           </h2>
 
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Razão Social
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    CNPJ
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Inscrição Estadual
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Endereço
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Telefone
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Nome Contato
-                  </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Placa
                   </th>
@@ -343,21 +321,6 @@ function FrotaPage() {
                     key={index}
                     className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
                   >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {empresa.razaoSocial}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {empresa.cnpj}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {empresa.inscricaoEst}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {empresa.endereco}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {empresa.email}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {empresa.telefone}
                     </td>

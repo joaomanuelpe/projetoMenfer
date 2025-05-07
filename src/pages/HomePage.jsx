@@ -75,7 +75,7 @@ const HomePage = () => {
       </header>
       <main className="max-w-6xl mx-auto px-4 py-8">
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <div className="text-center text-gray-700 italic text-xl">
+          <div className="text-center font-[Playfair_Display] text-gray-700 italic text-xl">
             {verse || "Carregando versículo..."}
           </div>
         </div>
@@ -117,12 +117,12 @@ const HomePage = () => {
           </div>
 
 
-          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden" onClick={() => navigate("/abastecimento")}>
             <div className="bg-blue-600 h-2"></div>
             <div className="p-6">
               <Fuel className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <p className="text-center font-semibold text-gray-800 text-lg">
-                Abastecimento
+                Viagens
               </p>
             </div>
           </div>
