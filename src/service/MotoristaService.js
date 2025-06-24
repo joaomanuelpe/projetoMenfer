@@ -1,5 +1,5 @@
-export default class EmpresaService {
-    #URL = `http://localhost:5000/empresa`;
+export default class MotoristaService {
+    #URL = `http://localhost:5000/motorista`;
 
     get = async () => {
         const res = await fetch(this.#URL, {
@@ -9,39 +9,38 @@ export default class EmpresaService {
         return response;
     }
 
-    insert = async (empresa) => {
+    insert = async (motorista) => {
         const res = await fetch(this.#URL, {
             method: `POST`,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(empresa)
+            body: JSON.stringify(motorista)
         });
 
         const response = res.json();
         return response;
     }
 
-    update = async (empresa) => {
+    update = async (motorista) => {
         const res = await fetch(this.#URL, {
             method: `PUT`,
             headers: {
                 "Content-Type": 'application/json'
             },
-            body: JSON.stringify(empresa)
+            body: JSON.stringify(motorista)
         });
 
         const response = res.json();
         return response;
     }
 
-    delete = async (cnpj) => {
-        const res = await fetch(this.#URL + "/" + cnpj, {
+    delete = async (cpf) => {
+        const res = await fetch(this.#URL + "/" + cpf, {
             method: 'DELETE'
         });
 
         const response = await res.json();
         return response;
     }
-
 }

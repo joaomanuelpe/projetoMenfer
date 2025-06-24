@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText, FilePlus} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import MenferLogo from "../assets/MenferLogo.png"
 
 const HomePage = () => {
   const [verse, setVerse] = useState("");
@@ -37,7 +38,7 @@ const HomePage = () => {
     <div className="min-h-screen bg-blue-50">
       <header className="bg-blue-600 text-white py-4 px-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Menferlog</h1>
+          <img src={MenferLogo} alt="Logo Menfer" />
           <div className="flex items-center space-x-4">
             <span className="flex items-center text-xl gap-2">
               <svg
