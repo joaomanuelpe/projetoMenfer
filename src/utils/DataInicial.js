@@ -1,0 +1,1 @@
+export const initialData = Array(8).fill(null).map(() => ({}));

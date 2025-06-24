@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText, FilePlus} from "lucide-react";
+import { Bell, UserPlus, Users, BadgeDollarSign, Fuel, ScrollText, FilePlus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import MenferLogo from "../assets/MenferLogo.png"
@@ -118,12 +118,12 @@ const HomePage = () => {
           </div>
 
 
-          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden" onClick={() => navigate("/abastecimento")}>
             <div className="bg-blue-600 h-2"></div>
             <div className="p-6">
               <Fuel className="w-12 h-12 mx-auto mb-4 text-blue-600" />
               <p className="text-center font-semibold text-gray-800 text-lg">
-                Abastecimento
+                Viagens
               </p>
             </div>
           </div>
