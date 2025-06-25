@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { ArrowLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import SelecaoVeiculoPage from "../components/CarregarDocs";
 import MotoristaService from "../service/MotoristaService.js";
 import VeiculoService from "../service/VeiculoService.js";
@@ -10,7 +12,7 @@ export default function TelaSelecao() {
     const [reboques, setReboques] = useState([]);
     const veiculoService = new VeiculoService();
     const motoristaService = new MotoristaService();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,7 +31,6 @@ export default function TelaSelecao() {
 
         fetchData();
     }, []);
-
 
     const [formData, setFormData] = useState({
         motorista: '',
@@ -62,28 +63,24 @@ export default function TelaSelecao() {
         setTelaItens(true);
     };
 
-
-    // Dados mockados de exemplo
-    /*const motoristas = [
-        { id: 1, nome: 'João Silva', contato: '18996670191', cnh: 'cnhTeste.jpg', comprovanteResidencia: 'comprovanteResidencia.png', ctpp: '99999', cetpp: '999' },
-        { id: 2, nome: 'Maria Souza', contato: '18996670191', cnh: 'cnhTeste.jpg', comprovanteResidencia: 'comprovanteResidencia.png', ctpp: '99999', cetpp: '999' },
-    ];
-
-    const cavalos = [
-        { id: 1, nome: 'Cavalo 001', ANTT: 'XXXXXXXX', idRastreador: '123', empRastreador: '456', crlv: 'crlvTeste.jpg' },
-        { id: 2, nome: 'Cavalo 002', ANTT: 'XXXXXXXX', idRastreador: '123', empRastreador: '456', crlv: 'crlvTeste.jpg' },
-    ];
-
-    const reboques = [
-        { id: 1, nome: 'Reboque A', ANTT: 'YYYYYYYY', idRastreador: '654', empRastreador: '987', crlv: 'crlvTeste.jpg' },
-        { id: 2, nome: 'Reboque B', ANTT: 'YYYYYYYY', idRastreador: '654', empRastreador: '987', crlv: 'crlvTeste.jpg' },
-    ];*/
+    const handleVoltarHome = () => {
+        navigate("/home");
+    };
 
     if (!telaItens)
         return (
             <div className="min-h-screen bg-gray-100 p-6">
                 <div className="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-                    <h2 className="text-2xl font-semibold text-blue-600 mb-6">Selecione para gerar os documentos</h2>
+                    <div className="flex items-center mb-6">
+                        <button
+                            onClick={handleVoltarHome}
+                            className="flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200 mr-4"
+                        >
+                            <ArrowLeft className="w-5 h-5 mr-2" />
+                            Voltar
+                        </button>
+                        <h2 className="text-2xl font-semibold text-blue-600">Selecione para gerar os documentos</h2>
+                    </div>
 
                     <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>

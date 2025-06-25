@@ -574,7 +574,7 @@ function FrotaPage() {
 
                                 <div>
                                     <label className="block text-sm font-medium text-gray-700">
-                                        Cronograma
+                                        Consulta Cronotacógrafo
                                     </label>
                                     <input
                                         type="file"
