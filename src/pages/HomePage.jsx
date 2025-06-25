@@ -36,7 +36,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen bg-blue-50">
-      <header className="bg-blue-600 text-white py-4 px-6 shadow-lg">
+      <header className="bg-blue-400 text-white py-4 px-6 shadow-lg">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <img src={MenferLogo} alt="Logo Menfer" />
           <div className="flex items-center space-x-4">
@@ -94,7 +94,7 @@ const HomePage = () => {
             </div>
           </div>
 
-          <div className="transform hover:scale-105 transition-transform bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="transform hover:scale-105 transition-transform cursor-pointer bg-white rounded-xl shadow-lg overflow-hidden" onClick={() => navigate("/financeiro")}>
             <div className="bg-orange-500 h-2"></div>
             <div className="p-6">
               <BadgeDollarSign className="w-12 h-12 mx-auto mb-4 text-orange-500" />
