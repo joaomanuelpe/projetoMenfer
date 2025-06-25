@@ -2,6 +2,7 @@ import React from 'react';
 import CedulaTexto from '../components/CedulaTexto';
 import CedulaSelecao from '../components/CedulaSelecao';
 import CelulaData from '../components/CedulaData';
+import CedulaTempo from '../components/CedulaTempo';
 import ValorCedulaCondicional from '../components/ValorCedulaCondicional';
 
 function Cedula({ value, isEditing, onChange, onBlur, column }) {
@@ -12,7 +13,7 @@ function Cedula({ value, isEditing, onChange, onBlur, column }) {
         <CedulaSelecao
           value={value}
           options={column.options}
-          isEditing={isEditing} 
+          isEditing={isEditing}
           onChange={onChange}
           onBlur={onBlur}
         />
@@ -20,6 +21,15 @@ function Cedula({ value, isEditing, onChange, onBlur, column }) {
     case 'date':
       return (
         <CelulaData
+          value={value}
+          isEditing={isEditing}
+          onChange={onChange}
+          onBlur={onBlur}
+        />
+      );
+    case 'time':
+      return (
+        <CedulaTempo
           value={value}
           isEditing={isEditing}
           onChange={onChange}
