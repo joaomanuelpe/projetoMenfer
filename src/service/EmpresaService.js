@@ -36,7 +36,7 @@ export default class EmpresaService {
     }
 
     delete = async (cnpj) => {
-        const res = await fetch(this.#URL + "/" + cnpj, {
+        const res = await fetch(this.#URL + "/" + encodeURIComponent(cnpj), {
             method: 'DELETE'
         });
 

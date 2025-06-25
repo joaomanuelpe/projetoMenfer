@@ -136,6 +136,8 @@ function EmpresaPage() {
                 }
             } catch (error) {
                 alert(`Erro ao excluir empresa: ${error.message}`);
+            } finally { 
+                window.location.reload();
             }
         }
     };

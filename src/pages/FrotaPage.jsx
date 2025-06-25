@@ -101,6 +101,9 @@ function FrotaPage() {
         } catch (error) {
             alert(`Erro ao ${isEditing ? 'atualizar' : 'cadastrar'} veículo: ${error.message}`);
         }
+        finally {
+            window.location.reload();
+        }
     };
 
     const handleEdit = (index) => {
@@ -126,7 +129,7 @@ function FrotaPage() {
         });
         setIsEditing(true);
         setEditingId(veiculo.placa); // Usando placa como ID único
-        
+
         // Scroll para o formulário
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -155,6 +158,9 @@ function FrotaPage() {
                 }
             } catch (error) {
                 alert(`Erro ao excluir veículo: ${error.message}`);
+            }
+            finally {
+                window.location.reload();
             }
         }
     };
@@ -248,9 +254,8 @@ function FrotaPage() {
                                 value={formData.placa}
                                 onChange={handleInputChange}
                                 disabled={isEditing} // Placa não pode ser alterada
-                                className={`mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none ${
-                                    isEditing ? 'bg-gray-100 cursor-not-allowed' : ''
-                                }`}
+                                className={`mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none ${isEditing ? 'bg-gray-100 cursor-not-allowed' : ''
+                                    }`}
                                 placeholder="ABC-1234"
                             />
                             {isEditing && (
@@ -523,11 +528,10 @@ function FrotaPage() {
                         <div className="md:col-span-3">
                             <button
                                 onClick={handleSubmit}
-                                className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
-                                    isEditing
+                                className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${isEditing
                                         ? 'bg-blue-500 hover:bg-blue-600 text-white'
                                         : 'bg-orange-500 hover:bg-orange-600 text-white'
-                                }`}
+                                    }`}
                             >
                                 {isEditing ? 'Atualizar Veículo' : 'Cadastrar Veículo'}
                             </button>
@@ -588,9 +592,8 @@ function FrotaPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {veiculos.map((veiculo, index) => (
-                                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} ${
-                                        editingId === veiculo.placa ? 'ring-2 ring-blue-200 bg-blue-50' : ''
-                                    }`}>
+                                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} ${editingId === veiculo.placa ? 'ring-2 ring-blue-200 bg-blue-50' : ''
+                                        }`}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                                             {veiculo.placa}
                                         </td>
@@ -632,11 +635,10 @@ function FrotaPage() {
                                                 <button
                                                     onClick={() => handleEdit(index)}
                                                     disabled={isEditing && editingId === veiculo.placa}
-                                                    className={`${
-                                                        isEditing && editingId === veiculo.placa
+                                                    className={`${isEditing && editingId === veiculo.placa
                                                             ? 'text-blue-400 cursor-not-allowed'
                                                             : 'text-blue-600 hover:text-blue-800'
-                                                    } transition-colors`}
+                                                        } transition-colors`}
                                                     title={isEditing && editingId === veiculo.placa ? 'Em edição' : 'Editar'}
                                                 >
                                                     <Edit2 className="h-4 w-4" />

@@ -13,6 +13,8 @@ const initialFormState = {
     licenseExpiryDate: "",
     birthDate: "",
     address: "",
+    cnh: "",
+    cetpp: "",
     arqCnh: null,
     comprovanteRs: null,
     arqCetpp: null,
@@ -118,6 +120,8 @@ function MotoristaPage() {
             }
         } catch (error) {
             alert(`Erro ao ${isEditing ? 'atualizar' : 'cadastrar'} motorista: ${error.message}`);
+        } finally {
+            window.location.reload();
         }
     };
 
@@ -132,6 +136,8 @@ function MotoristaPage() {
             licenseExpiryDate: motorista.licenseExpiryDate,
             birthDate: motorista.birthDate,
             address: motorista.address,
+            cnh: motorista.cnh || "",
+            cetpp: motorista.cetpp || "",
             arqCnh: null, // Arquivos não são carregados para edição
             comprovanteRs: null,
             arqCetpp: null,
@@ -140,7 +146,7 @@ function MotoristaPage() {
         });
         setIsEditing(true);
         setEditingId(motorista.cpf); // Usando CPF como ID único
-        
+
         // Scroll para o formulário
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -169,6 +175,8 @@ function MotoristaPage() {
                 }
             } catch (error) {
                 alert(`Erro ao excluir motorista: ${error.message}`);
+            } finally {
+                window.location.reload();
             }
         }
     };
@@ -302,9 +310,8 @@ function MotoristaPage() {
                                 value={formData.cpf}
                                 onChange={handleInputChange}
                                 disabled={isEditing} // CPF não pode ser alterado
-                                className={`mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none ${
-                                    isEditing ? 'bg-gray-100 cursor-not-allowed' : ''
-                                }`}
+                                className={`mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none ${isEditing ? 'bg-gray-100 cursor-not-allowed' : ''
+                                    }`}
                                 placeholder="000.000.000-00"
                             />
                             {isEditing && (
@@ -327,6 +334,36 @@ function MotoristaPage() {
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
                                 placeholder="Número de registro da CNH"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                CNH
+                            </label>
+                            <input
+                                type="text"
+                                name="cnh"
+                                maxLength="20"
+                                value={formData.cnh}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
+                                placeholder="Número da CNH"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                CETPP
+                            </label>
+                            <input
+                                type="text"
+                                name="cetpp"
+                                maxLength="30"
+                                value={formData.cetpp}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
+                                placeholder="Número do certificado CETPP"
                             />
                         </div>
 
@@ -358,7 +395,7 @@ function MotoristaPage() {
                             />
                         </div>
 
-                        <div className="md:col-span-2">
+                        <div className="md:col-span-3">
                             <label className="block text-sm font-medium text-gray-700">
                                 Endereço Completo *
                             </label>
@@ -451,11 +488,10 @@ function MotoristaPage() {
                         <div className="md:col-span-3">
                             <button
                                 onClick={handleSubmit}
-                                className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${
-                                    isEditing
+                                className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${isEditing
                                         ? 'bg-blue-500 hover:bg-blue-600 text-white'
                                         : 'bg-orange-500 hover:bg-orange-600 text-white'
-                                }`}
+                                    }`}
                             >
                                 {isEditing ? 'Atualizar Motorista' : 'Cadastrar Motorista'}
                             </button>
@@ -489,6 +525,12 @@ function MotoristaPage() {
                                         Nº Registro
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        CNH
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        CETPP
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Venc. CNH
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -504,9 +546,8 @@ function MotoristaPage() {
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-200">
                                 {motoristas.map((motorista, index) => (
-                                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} ${
-                                        editingId === motorista.cpf ? 'ring-2 ring-blue-200 bg-blue-50' : ''
-                                    }`}>
+                                    <tr key={index} className={`${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'} ${editingId === motorista.cpf ? 'ring-2 ring-blue-200 bg-blue-50' : ''
+                                        }`}>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {motorista.name}
                                         </td>
@@ -523,6 +564,12 @@ function MotoristaPage() {
                                             {motorista.registrationNumber}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {typeof motorista.cnh === 'string' ? motorista.cnh : '-'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                            {typeof motorista.cetpp === 'string' ? motorista.cetpp : '-'}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {formatDate(motorista.licenseExpiryDate)}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
@@ -536,11 +583,10 @@ function MotoristaPage() {
                                                 <button
                                                     onClick={() => handleEdit(index)}
                                                     disabled={isEditing && editingId === motorista.cpf}
-                                                    className={`${
-                                                        isEditing && editingId === motorista.cpf
+                                                    className={`${isEditing && editingId === motorista.cpf
                                                             ? 'text-blue-400 cursor-not-allowed'
                                                             : 'text-blue-600 hover:text-blue-800'
-                                                    } transition-colors`}
+                                                        } transition-colors`}
                                                     title={isEditing && editingId === motorista.cpf ? 'Em edição' : 'Editar'}
                                                 >
                                                     <Edit2 className="h-4 w-4" />
