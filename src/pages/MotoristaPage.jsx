@@ -107,7 +107,38 @@ function MotoristaPage() {
                 }
             } else {
                 // Cadastrar novo motorista
-                const res = await service.insert(formData);
+                const data = new FormData();
+
+                // Campos simples (string, datas, etc)
+                data.append("name", formData.name);
+                data.append("phone", formData.phone);
+                data.append("rg", formData.rg);
+                data.append("cpf", formData.cpf);
+                data.append("registrationNumber", formData.registrationNumber);
+                data.append("licenseExpiryDate", formData.licenseExpiryDate);
+                data.append("birthDate", formData.birthDate);
+                data.append("address", formData.address);
+                data.append("cnh", formData.cnh);
+                data.append("cetpp", formData.cetpp);
+
+                // Campos que são arquivos - só adiciona se não for null
+                if (formData.arqCnh instanceof File) {
+                    data.append("arqCnh", formData.arqCnh);
+                }
+                if (formData.comprovanteRs instanceof File) {
+                    data.append("comprovanteRs", formData.comprovanteRs);
+                }
+                if (formData.arqCetpp instanceof File) {
+                    data.append("arqCetpp", formData.arqCetpp);
+                }
+                if (formData.arqExamTox instanceof File) {
+                    data.append("arqExamTox", formData.arqExamTox);
+                }
+                if (formData.arqAso instanceof File) {
+                    data.append("arqAso", formData.arqAso);
+                }
+
+                const res = await service.insert(data);
                 if (res.status === 200) {
                     alert('Motorista cadastrado com sucesso!');
                     setFormData(initialFormState);
@@ -410,87 +441,90 @@ function MotoristaPage() {
                                 placeholder="Endereço completo com CEP"
                             />
                         </div>
+                        {
+                            !isEditing ?
+                                <div className="md:col-span-3">
+                                    <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
+                                        <FileText className="h-5 w-5" />
+                                        Documentos e Certificados
+                                    </h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                CNH (Arquivo)
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="arqCnh"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleFileChange}
+                                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                            />
+                                        </div>
 
-                        {/* Seção de Documentos */}
-                        <div className="md:col-span-3">
-                            <h3 className="text-lg font-medium text-gray-900 mb-4 flex items-center gap-2">
-                                <FileText className="h-5 w-5" />
-                                Documentos e Certificados
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        CNH (Arquivo)
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="arqCnh"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                                    />
-                                </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Comprovante de Residência
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="comprovanteRs"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleFileChange}
+                                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                            />
+                                        </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        Comprovante de Residência
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="comprovanteRs"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                                    />
-                                </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Certificado CETPP
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="arqCetpp"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleFileChange}
+                                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                            />
+                                        </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        Certificado CETPP
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="arqCetpp"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                                    />
-                                </div>
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                Exame Toxicológico
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="arqExamTox"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleFileChange}
+                                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                            />
+                                        </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        Exame Toxicológico
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="arqExamTox"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                                    />
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">
+                                                ASO (Atestado de Saúde Ocupacional)
+                                            </label>
+                                            <input
+                                                type="file"
+                                                name="arqAso"
+                                                accept=".pdf,.jpg,.jpeg,.png"
+                                                onChange={handleFileChange}
+                                                className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700">
-                                        ASO (Atestado de Saúde Ocupacional)
-                                    </label>
-                                    <input
-                                        type="file"
-                                        name="arqAso"
-                                        accept=".pdf,.jpg,.jpeg,.png"
-                                        onChange={handleFileChange}
-                                        className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
-                                    />
-                                </div>
-                            </div>
-                        </div>
+                                :
+                                <></>
+                        }
 
                         <div className="md:col-span-3">
                             <button
                                 onClick={handleSubmit}
                                 className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${isEditing
-                                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                                        : 'bg-orange-500 hover:bg-orange-600 text-white'
+                                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                                    : 'bg-orange-500 hover:bg-orange-600 text-white'
                                     }`}
                             >
                                 {isEditing ? 'Atualizar Motorista' : 'Cadastrar Motorista'}
@@ -564,10 +598,10 @@ function MotoristaPage() {
                                             {motorista.registrationNumber}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {typeof motorista.cnh === 'string' ? motorista.cnh : '-'}
+                                            {motorista.cnh}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                            {typeof motorista.cetpp === 'string' ? motorista.cetpp : '-'}
+                                            {motorista.cetpp}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                                             {formatDate(motorista.licenseExpiryDate)}
@@ -584,8 +618,8 @@ function MotoristaPage() {
                                                     onClick={() => handleEdit(index)}
                                                     disabled={isEditing && editingId === motorista.cpf}
                                                     className={`${isEditing && editingId === motorista.cpf
-                                                            ? 'text-blue-400 cursor-not-allowed'
-                                                            : 'text-blue-600 hover:text-blue-800'
+                                                        ? 'text-blue-400 cursor-not-allowed'
+                                                        : 'text-blue-600 hover:text-blue-800'
                                                         } transition-colors`}
                                                     title={isEditing && editingId === motorista.cpf ? 'Em edição' : 'Editar'}
                                                 >

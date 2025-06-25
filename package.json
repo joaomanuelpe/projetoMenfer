@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "lucide-react": "^0.344.0",
-    "pdfmake": "^0.2.18",
+    "pdfmake": "^0.2.20",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hot-toast": "^2.5.2",

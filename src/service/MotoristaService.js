@@ -12,10 +12,7 @@ export default class MotoristaService {
     insert = async (motorista) => {
         const res = await fetch(this.#URL, {
             method: `POST`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(motorista)
+            body: motorista
         });
 
         const response = res.json();

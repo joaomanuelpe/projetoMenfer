@@ -6,12 +6,14 @@ import VeiculoService from '../service/VeiculoService.js';
 
 const initialFormState = {
     placa: "",
+    tipo: "",
     renavam: "",
     marca: "",
     modelo: "",
     chassi: "",
     licenciamento: "",
     expiraLicenciamento: "",
+    anttText: "",
     antt: null,
     idRastreador: "",
     empresaRastreador: "",
@@ -87,7 +89,41 @@ function FrotaPage() {
                 }
             } else {
                 // Cadastrar novo veículo
-                const res = await service.insert(formData);
+                const data = new FormData();
+
+                // Campos simples (convertidos para string se necessário)
+                data.append("placa", formData.placa);
+                data.append("tipo", formData.tipo);
+                data.append("renavam", formData.renavam);
+                data.append("marca", formData.marca);
+                data.append("modelo", formData.modelo);
+                data.append("chassi", formData.chassi);
+                data.append("licenciamento", formData.licenciamento); // Date em string ISO
+                data.append("expiraLicenciamento", formData.expiraLicenciamento);
+                data.append("anttText", formData.anttText);
+                data.append("antt", formData.antt ?? ""); // Caso não tenha, manda vazio
+                data.append("idRastreador", formData.idRastreador);
+                data.append("empresaRastreador", formData.empresaRastreador);
+                data.append("contratoArrendamento", formData.contratoArrendamento ?? "");
+                data.append("civ", formData.civ);
+                data.append("civNumero", formData.civNumero ?? "");
+                data.append("expiraCiv", formData.expiraCiv);
+
+                // Arquivos (somente se tiver sido selecionado)
+                if (formData.arqCrlv instanceof File) {
+                    data.append("arqCrlv", formData.arqCrlv);
+                }
+
+                if (formData.arqCrono instanceof File) {
+                    data.append("arqCrono", formData.arqCrono);
+                }
+
+                if (formData.arqLaudoOpa instanceof File) {
+                    data.append("arqLaudoOpa", formData.arqLaudoOpa);
+                }
+                setFormData(data);
+                console.log(data)
+                const res = await service.insert(data);
                 if (res.status === 200) {
                     alert('Veículo cadastrado com sucesso!');
                     setFormData(initialFormState);
@@ -102,7 +138,6 @@ function FrotaPage() {
             alert(`Erro ao ${isEditing ? 'atualizar' : 'cadastrar'} veículo: ${error.message}`);
         }
         finally {
-            window.location.reload();
         }
     };
 
@@ -110,12 +145,14 @@ function FrotaPage() {
         const veiculo = veiculos[index];
         setFormData({
             placa: veiculo.placa,
+            tipo: veiculo.tipo,
             renavam: veiculo.renavam,
             marca: veiculo.marca,
             modelo: veiculo.modelo,
             chassi: veiculo.chassi,
             licenciamento: veiculo.licenciamento,
             expiraLicenciamento: veiculo.expiraLicenciamento,
+            anttText: veiculo.anttText,
             antt: null, // Arquivos não são carregados para edição
             idRastreador: veiculo.idRastreador,
             empresaRastreador: veiculo.empresaRastreador,
@@ -329,6 +366,38 @@ function FrotaPage() {
                             />
                         </div>
 
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                ANTT *
+                            </label>
+                            <input
+                                type="text"
+                                name="anttText"
+                                required
+                                maxLength="20"
+                                value={formData.anttText}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
+                                placeholder="Número da ANTT"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">
+                                Tipo *
+                            </label>
+                            <select
+                                name="tipo"
+                                value={formData.tipo}
+                                onChange={handleInputChange}
+                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
+                            >
+                                <option value="">{formData.tipo === "" ? "Selecione" : formData.tipo}</option>
+                                <option value="cavalo">Cavalo</option>
+                                <option value="reboque">Reboque</option>
+                            </select>
+                        </div>
+
                         {/* Licenciamento */}
                         <div className="md:col-span-3 mt-6">
                             <h3 className="text-lg font-medium text-gray-900 mb-4">
@@ -412,15 +481,16 @@ function FrotaPage() {
                             <label className="block text-sm font-medium text-gray-700">
                                 CIV
                             </label>
-                            <input
-                                type="text"
+                            <select
                                 name="civ"
-                                maxLength="45"
                                 value={formData.civ}
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
-                                placeholder="Número do CIV"
-                            />
+                            >
+                                <option value="">Selecione</option>
+                                <option value="sim">Sim</option>
+                                <option value="não">Não</option>
+                            </select>
                         </div>
 
                         <div>
@@ -433,7 +503,11 @@ function FrotaPage() {
                                 maxLength="20"
                                 value={formData.civNumero}
                                 onChange={handleInputChange}
-                                className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
+                                disabled={formData.civ !== 'sim'}
+                                className={`mt-1 block w-full rounded-md border px-3 py-2 shadow-sm focus:outline-none ${formData.civ === 'sim'
+                                    ? 'border-gray-300 focus:border-orange-500 focus:ring-orange-500'
+                                    : 'bg-gray-100 cursor-not-allowed border-gray-200 text-gray-500'
+                                    }`}
                                 placeholder="Número específico do CIV"
                             />
                         </div>
@@ -445,6 +519,7 @@ function FrotaPage() {
                             <input
                                 type="date"
                                 name="expiraCiv"
+                                disabled={formData.civ !== 'sim'}
                                 value={formData.expiraCiv}
                                 onChange={handleInputChange}
                                 className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-orange-500 focus:ring-orange-500 focus:outline-none"
@@ -529,8 +604,8 @@ function FrotaPage() {
                             <button
                                 onClick={handleSubmit}
                                 className={`w-full py-3 px-4 rounded-md font-medium transition-colors duration-200 ${isEditing
-                                        ? 'bg-blue-500 hover:bg-blue-600 text-white'
-                                        : 'bg-orange-500 hover:bg-orange-600 text-white'
+                                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                                    : 'bg-orange-500 hover:bg-orange-600 text-white'
                                     }`}
                             >
                                 {isEditing ? 'Atualizar Veículo' : 'Cadastrar Veículo'}
@@ -636,8 +711,8 @@ function FrotaPage() {
                                                     onClick={() => handleEdit(index)}
                                                     disabled={isEditing && editingId === veiculo.placa}
                                                     className={`${isEditing && editingId === veiculo.placa
-                                                            ? 'text-blue-400 cursor-not-allowed'
-                                                            : 'text-blue-600 hover:text-blue-800'
+                                                        ? 'text-blue-400 cursor-not-allowed'
+                                                        : 'text-blue-600 hover:text-blue-800'
                                                         } transition-colors`}
                                                     title={isEditing && editingId === veiculo.placa ? 'Em edição' : 'Editar'}
                                                 >
